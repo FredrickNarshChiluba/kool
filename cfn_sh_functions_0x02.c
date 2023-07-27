@@ -1,10 +1,5 @@
 #include "shell.h"
 
-alias_t *add_alias_end(alias_t **head, char *name, char *value);
-void free_alias_list(alias_t *head);
-list_t *add_node_end(list_t **head, char *dir);
-void free_list(list_t *head);
-
 /**
  * add_alias_end - Adds a node to the end of a alias_t linked list.
  * @head: A pointer to the head of the list_t list.
@@ -110,4 +105,33 @@ void free_list(list_t *head)
 		free(head);
 		head = next;
 	}
+}
+
+/**
+ * get_builtin - Matches a command with a corresponding
+ *               shellby builtin function.
+ * @command: The command to match.
+ *
+ * Return: A function pointer to the corresponding builtin.
+ */
+int (*get_builtin(char *command))(char **args, char **front)
+{
+	builtin_t funcs[] = {
+		{ "exit", shellby_exit },
+		{ "env", shellby_env },
+		{ "setenv", shellby_setenv },
+		{ "unsetenv", shellby_unsetenv },
+		{ "cd", shellby_cd },
+		{ "alias", shellby_alias },
+		{ "help", shellby_help },
+		{ NULL, NULL }
+	};
+	int i;
+
+	for (i = 0; funcs[i].name; i++)
+	{
+		if (_strcmp(funcs[i].name, command) == 0)
+			break;
+	}
+	return (funcs[i].f);
 }

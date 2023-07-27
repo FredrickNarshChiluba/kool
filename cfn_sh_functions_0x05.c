@@ -1,10 +1,5 @@
 #include "shell.h"
 
-void free_args(char **args, char **front);
-char *get_pid(void);
-char *get_env_value(char *beginning, int len);
-void variable_replacement(char **args, int *exe_ret);
-
 /**
  * free_args - Frees up memory taken by args.
  * @args: A null-terminated double pointer containing commands/arguments.
@@ -152,4 +147,18 @@ void variable_replacement(char **line, int *exe_ret)
 			j = -1;
 		}
 	}
+}
+
+/**
+ * help_help - Displays information on the shellby builtin command 'help'.
+ */
+void help_help(void)
+{
+	char *msg = "help: help\n\tSee all possible Shellby builtin commands.\n";
+
+	write(STDOUT_FILENO, msg, _strlen(msg));
+	msg = "\n      help [BUILTIN NAME]\n\tSee specific information on each ";
+	write(STDOUT_FILENO, msg, _strlen(msg));
+	msg = "builtin command.\n";
+	write(STDOUT_FILENO, msg, _strlen(msg));
 }
